@@ -5,7 +5,7 @@ const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const urlProd = "https://boxlinknet.github.io/kwtsms-msexcel/";
+const urlProd = "https://kwtsms.github.io/kwtsms-msexcel/";
 
 async function getHttpsOptions() {
   const certsDir = path.join(require("os").homedir(), ".office-addin-dev-certs");

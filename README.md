@@ -34,7 +34,7 @@ Send bulk SMS directly from your Excel spreadsheets using the [kwtSMS](https://w
 ### Install
 
 ```bash
-git clone https://github.com/boxlinknet/kwtsms-msexcel.git
+git clone https://github.com/kwtsms/kwtsms-msexcel.git
 cd kwtsms-msexcel
 npm install
 ```
