@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- 2026-11-26 13:40 +03: URLs moved from kwtsms.github.io to www.kwtsms.com/addins/excel/ (own server, same origin as the API), Boss 2183, #968 -->
+<!-- 2026-11-26 13:40 +03: URLs moved from kwtsms.github.io to www.kwtsms.com/addins/excel/ (own server), Boss 2183, #968 -->
+<!-- 2026-11-26 13:54 +03: host is addins.kwtsms.com (own origin, isolated storage), Boss 2208 -->
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
   <Id>0f40b35b-c32f-4ff5-8d5a-a9fb0fbe6bc5</Id>
   <Version>1.0.21.0</Version>
@@ -7,8 +8,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="kwtSMS"/>
   <Description DefaultValue="Send bulk SMS directly from your Excel spreadsheets using the kwtSMS gateway. Map phone number and message columns, validate numbers for 80+ countries, and track delivery in a dedicated log sheet."/>
-  <IconUrl DefaultValue="https://www.kwtsms.com/addins/excel/assets/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://www.kwtsms.com/addins/excel/assets/icon-64.png"/>
+  <IconUrl DefaultValue="https://addins.kwtsms.com/excel/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://addins.kwtsms.com/excel/assets/icon-64.png"/>
   <SupportUrl DefaultValue="https://www.kwtsms.com/support.html"/>
   <AppDomains>
     <AppDomain>https://www.kwtsms.com</AppDomain>
@@ -17,7 +18,7 @@
     <Host Name="Workbook"/>
   </Hosts>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://www.kwtsms.com/addins/excel/taskpane.html"/>
+    <SourceLocation DefaultValue="https://addins.kwtsms.com/excel/taskpane.html"/>
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
@@ -63,14 +64,14 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://www.kwtsms.com/addins/excel/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://www.kwtsms.com/addins/excel/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://www.kwtsms.com/addins/excel/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://addins.kwtsms.com/excel/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://addins.kwtsms.com/excel/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://addins.kwtsms.com/excel/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
-        <bt:Url id="Commands.Url" DefaultValue="https://www.kwtsms.com/addins/excel/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://www.kwtsms.com/addins/excel/taskpane.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://addins.kwtsms.com/excel/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://addins.kwtsms.com/excel/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with kwtSMS!"/>
