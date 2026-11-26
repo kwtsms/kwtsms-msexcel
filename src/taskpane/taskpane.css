@@ -46,6 +46,26 @@ body {
     margin: 0 0 20px;
 }
 
+/* 2026-11-26 12:08 +03: first-run intro and account help on the login screen, Microsoft cert 1100.1.5 + 1100.5.7.3, #968 */
+.login-intro {
+    font-size: 13px;
+    color: #434345;
+    text-align: center;
+    margin: -10px 0 18px;
+    line-height: 1.45;
+}
+
+.login-account {
+    font-size: 12px;
+    color: #434345;
+    margin-top: 16px;
+    line-height: 1.45;
+}
+
+.login-account p {
+    margin: 0 0 8px;
+}
+
 /* ─── Status bar ───────────────────────────────────────────────────────────── */
 
 .main-logo {

@@ -21,6 +21,8 @@
             <img src="../../assets/kwtsms-logo.png" alt="kwtSMS" style="max-width: 180px; height: auto;" />
         </div>
         <h1 class="login-heading">Login to kwtSMS API</h1>
+        <!-- 2026-11-26 12:05 +03: first-run value lines, Microsoft certification 1100.1.5 (report 2026-11-25), #968 -->
+        <p class="login-intro">Send SMS to the phone numbers in your sheet, in English or Arabic, from your kwtSMS account. Every send is written to a log sheet, and test mode lets you try it without delivery.</p>
 
         <form id="login-form">
             <div class="form-group">
@@ -37,6 +39,12 @@
 
             <div id="login-error" class="error-msg" style="display:none;"></div>
         </form>
+
+        <!-- 2026-11-26 12:05 +03: how to get an account or contact us on first run, Microsoft certification 1100.5.7.3, #968 -->
+        <div class="login-account">
+            <p><strong>No kwtSMS account yet?</strong> Create one free at <a href="https://www.kwtsms.com/cportal/signup/" target="_blank" rel="noopener noreferrer">kwtsms.com</a>, then use Request API access in your account to get your API username and API password.</p>
+            <p>Outside Kuwait, or need help? Write to <a href="mailto:support@kwtsms.com">support@kwtsms.com</a>.</p>
+        </div>
 
         <footer class="footer">
             <a href="https://www.kwtsms.com" target="_blank" class="footer-link">kwtsms.com</a>

@@ -15,6 +15,15 @@ import {
 
 const BASE_URL = "https://www.kwtsms.com/API";
 
+// 2026-11-05 14:55 +03: app version moved here from taskpane.ts (one copy), so the API client can
+// identify the add-in to kwtSMS; bump it with the manifest Version, #939.
+// 2026-11-26 12:08 +03: 1.0.21 for the certification resubmit, #968
+export const APP_VERSION = "1.0.21";
+
+// 2026-11-05 14:55 +03: browsers do not let fetch set User-Agent, so every request body carries
+// "client": name and version only, no personal data, #939.
+export const CLIENT_TOKEN = "kwtsms-office/" + APP_VERSION;
+
 async function apiCall<T>(endpoint: string, body: Record<string, any>): Promise<T> {
   const response = await fetch(BASE_URL + endpoint, {
     method: "POST",
@@ -22,7 +31,8 @@ async function apiCall<T>(endpoint: string, body: Record<string, any>): Promise<
       "Content-Type": "application/json",
       "Accept": "application/json",
     },
-    body: JSON.stringify(body),
+    // 2026-11-05 14:55 +03: add the client token to every call, #939.
+    body: JSON.stringify({ ...body, client: CLIENT_TOKEN }),
   });
 
   const data = await response.json();

@@ -13,7 +13,8 @@ import { ensureLogSheet, logBatch } from "../services/logger";
 import { getString, formatString } from "../localization/strings";
 import { LogEntry, SendStatus, SendResponse } from "../models/types";
 
-const APP_VERSION = "1.0.19";
+// 2026-11-05 14:55 +03: single version constant now lives in the API client, #939.
+const APP_VERSION = api.APP_VERSION;
 const BATCH_SIZE = 200;
 const BATCH_DELAY_MS = 200;
 
@@ -140,6 +141,12 @@ Office.onReady((info) => {
   const loginVersionDisplay = document.getElementById("login-version-display");
   if (loginVersionDisplay) loginVersionDisplay.textContent = versionText;
 
+  // 2026-11-26 13:10 +03: an old workbook carried a login: it is removed (not reused); ask to log in again, #1758
+  if (settings.removeFileLogin()) {
+    loginError.textContent = getString("fileLoginRemoved");
+    loginError.style.display = "";
+  }
+
   // Check for saved credentials to restore session
   const creds = settings.getCredentials();
   if (creds) {
@@ -246,7 +253,10 @@ async function handleLogin(): Promise<void> {
     showMainSection();
     populateColumnDropdowns();
   } catch (err: any) {
-    loginError.textContent = err.message || getString("loginError");
+    // 2026-11-26 12:08 +03: a network failure (TypeError "Failed to fetch" / "Load failed") now shows a clear message
+    // instead of the raw browser text; Microsoft cert 100.14.1 tester saw "Failed to fetch", #968.
+    loginError.textContent =
+      err instanceof TypeError ? getString("networkError") : err.message || getString("loginError");
     loginError.style.display = "";
   } finally {
     loginBtn.disabled = false;
@@ -818,6 +828,8 @@ async function handleSend(): Promise<void> {
     let sentCount = 0;
     let failedCount = 0;
     let totalPointsCharged = 0;
+    // 2026-11-26 12:53 +03: account Test mode seen on a live send (answer "test": true), checklist box 1.4, #968
+    let accountTestMode = false;
     let processedCount = 0;
     const totalToSend = deduped.length;
 
@@ -847,6 +859,7 @@ async function handleSend(): Promise<void> {
           );
 
           sentCount += 1;
+          if (resp.test === true && testMode === 0) accountTestMode = true;
           totalPointsCharged += resp["points-charged"];
 
           const balanceAfter = resp["balance-after"];
@@ -887,7 +900,7 @@ async function handleSend(): Promise<void> {
       (e) => e.status === "SKIPPED_NO_COVERAGE" || e.status === "SKIPPED_DUPLICATE"
     ).length;
 
-    showSendResult(sentCount, failedCount, skippedCount, totalPointsCharged);
+    showSendResult(sentCount, failedCount, skippedCount, totalPointsCharged, accountTestMode);
   } catch (err: any) {
     showSendError(err.message || "Unexpected error during send");
   } finally {
@@ -930,11 +943,19 @@ function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function showSendResult(sent: number, _failed: number, _skipped: number, pointsUsed: number): void {
+function showSendResult(
+  sent: number,
+  _failed: number,
+  _skipped: number,
+  pointsUsed: number,
+  accountTestMode = false
+): void {
   sendError.style.display = "none";
   sendError.textContent = "";
 
   sendResult.textContent = formatString(getString("resultSent"), { count: sent }) + "  |  " + formatString(getString("resultPointsUsed"), { count: pointsUsed });
+  // 2026-11-26 12:53 +03: say the SMS was a test, not delivered, when the account forced Test mode, #968
+  if (accountTestMode) sendResult.textContent += "  |  " + getString("accountTestMode");
   sendResult.style.display = "";
 }
 

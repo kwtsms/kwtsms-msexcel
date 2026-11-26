@@ -1,8 +1,10 @@
 // src/services/settings.ts
 // Wrapper for Office.context.document.settings (per-document, persists when saved).
+// 2026-11-26 13:00 +03: except the login, which is kept in localStorage (see saveCredentials), #1758
 // All writes call saveAsync() to persist to document.
 // Related: src/models/types.ts
 
+/* global window */ // 2026-11-26 13:05 +03: browser global for the localStorage login, lint no-undef, #1758
 import { KwtSmsCredentials, CachedData } from "../models/types";
 
 const KEYS = {
@@ -40,20 +42,55 @@ function saveAsync(): Promise<void> {
   });
 }
 
+// 2026-11-26 13:00 +03: credentials live in the task pane's localStorage (per user, per device), never in
+// document settings: those are saved inside the .xlsx, so anyone the sheet was shared with could read the
+// API password. Security review #1758 c17608 (HIGH), Microsoft guidance; #968.
+function localGet(key: string): string | null {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function localSet(key: string, value: string): void {
+  window.localStorage.setItem(key, value);
+}
+
+function localRemove(key: string): void {
+  try {
+    window.localStorage.removeItem(key);
+  } catch {
+    // storage blocked: nothing stored, nothing to remove
+  }
+}
+
+// 2026-11-26 13:10 +03: files saved by 1.0.20 and older carry the login. Remove it, never copy it: the file may
+// come from someone else, and copying would send on their credits from this device (Onyx #1758 c17630).
+// Returns true when a login was removed, so the task pane can ask the user to log in again.
+export function removeFileLogin(): boolean {
+  if (!get(KEYS.USERNAME) && !get(KEYS.PASSWORD)) return false;
+  remove(KEYS.USERNAME);
+  remove(KEYS.PASSWORD);
+  saveAsync().catch(() => undefined);
+  return true;
+}
+
 export async function saveCredentials(username: string, password: string): Promise<void> {
-  set(KEYS.USERNAME, username);
-  set(KEYS.PASSWORD, password);
-  await saveAsync();
+  localSet(KEYS.USERNAME, username);
+  localSet(KEYS.PASSWORD, password);
 }
 
 export function getCredentials(): KwtSmsCredentials | null {
-  const username = get(KEYS.USERNAME);
-  const password = get(KEYS.PASSWORD);
+  const username = localGet(KEYS.USERNAME);
+  const password = localGet(KEYS.PASSWORD);
   if (!username || !password) return null;
   return { username, password };
 }
 
 export async function clearCredentials(): Promise<void> {
+  localRemove(KEYS.USERNAME);
+  localRemove(KEYS.PASSWORD);
   remove(KEYS.USERNAME);
   remove(KEYS.PASSWORD);
   await saveAsync();

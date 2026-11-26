@@ -8,6 +8,10 @@ export interface LocaleStrings {
   passwordPlaceholder: string;
   loginButton: string;
   loginError: string;
+  // 2026-11-26 12:08 +03: network failure text, #968
+  networkError: string;
+  // 2026-11-26 13:10 +03: old workbook login removed, #1758
+  fileLoginRemoved: string;
   loggingIn: string;
   balanceLabel: string;
   senderIdLabel: string;
@@ -28,6 +32,8 @@ export interface LocaleStrings {
   resultFailed: string;
   resultSkipped: string;
   resultPointsUsed: string;
+  // 2026-11-26 12:53 +03: account Test mode note, #968
+  accountTestMode: string;
   noPhoneColumn: string;
   noValidNumbers: string;
   insufficientBalance: string;
@@ -42,6 +48,12 @@ const en: LocaleStrings = {
   passwordPlaceholder: "API Password",
   loginButton: "Login",
   loginError: "Invalid credentials or service unavailable",
+  // 2026-11-26 12:08 +03: shown when the request cannot reach kwtSMS at all, #968
+  networkError:
+    "Could not reach kwtSMS. Check your internet connection and try again. If it keeps failing, write to support@kwtsms.com.",
+  // 2026-11-26 13:10 +03: shown once when a login saved in this workbook by an older version was removed, #1758
+  fileLoginRemoved:
+    "Please log in again. Your kwtSMS login is no longer kept in the workbook, so sharing a file never shares it.",
   loggingIn: "Logging in...",
   balanceLabel: "Balance",
   senderIdLabel: "Sender ID",
@@ -62,6 +74,9 @@ const en: LocaleStrings = {
   resultFailed: "Failed: {count}",
   resultSkipped: "Skipped: {count}",
   resultPointsUsed: "Points used: {count}",
+  // 2026-11-26 12:53 +03: shown when the send answer has "test": true but the add-in sent test=0, #968
+  accountTestMode:
+    "Your kwtSMS account is in Test mode: the SMS was queued as a test and not delivered. Turn Test mode off in your kwtSMS account to deliver.",
   noPhoneColumn: "Select a phone column",
   noValidNumbers: "No valid phone numbers found",
   insufficientBalance: "Insufficient balance: {needed} messages to send, {available} points available",

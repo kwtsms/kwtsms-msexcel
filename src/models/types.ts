@@ -30,6 +30,8 @@ export interface SendResponse {
   "points-charged": number;
   "balance-after": number;
   "unix-timestamp": number;
+  // 2026-11-26 12:53 +03: true when the account's own Test mode forced test=1, release checklist box 1.4, #968
+  test?: boolean;
 }
 
 export interface ValidateResponse {
