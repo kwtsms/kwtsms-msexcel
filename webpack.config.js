@@ -5,7 +5,8 @@ const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const urlProd = "https://kwtsms.github.io/kwtsms-msexcel/";
+// 2026-11-26 13:40 +03: hosted on our own server (same origin as the API, no CORS), Boss 2183, #968
+const urlProd = "https://www.kwtsms.com/addins/excel/";
 
 async function getHttpsOptions() {
   const certsDir = path.join(require("os").homedir(), ".office-addin-dev-certs");
