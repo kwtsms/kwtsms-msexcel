@@ -21,5 +21,6 @@ DEPENDS:   Nothing.
 - Your kwtSMS API login is no longer saved inside the workbook. It stays in Excel on your device, so sharing a file never shares your login. A login saved in a workbook by an older version is removed the next time the file is opened with the add-in, and you are asked to log in again. You log in once per device.
 
 ### Changed
+- The add-in is now served from addins.kwtsms.com, a kwtSMS server, instead of GitHub Pages.
 - When kwtSMS cannot be reached, login shows a clear message instead of "Failed to fetch".
 
